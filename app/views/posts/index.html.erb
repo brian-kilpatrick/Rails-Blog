@@ -1,0 +1,14 @@
+<h1>Feed</h1>
+<br>
+<br>
+<% @posts.reverse_order.each do |x| %>
+<p class="post-date"><%= x.created_at.strftime("%A, %B %d, %Y") %></p>
+<p class="title"><%=x.title.upcase%></p>
+<p class="content"><%=x.content%></p>
+<br>
+<%=link_to "Show Post", user_post_path(x.user, x ),{class: "link"} %>
+<br>
+<hr>
+<br>
+<br>	
+<%end%>

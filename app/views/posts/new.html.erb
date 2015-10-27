@@ -1,0 +1,38 @@
+<div class="row">
+	<div class="center-block form">
+
+<h1>Create a new post, <%= @current_user.fname %>!</h1>
+
+<% if @post.errors.size > 0 %>
+	<div class="errors">
+		<p>
+			<h3><%= pluralize(@post.errors.size, "error") %> prohibited post creation:</h3>
+			<ul>
+				<% @post.errors.full_messages.each do |x| %>
+				<li><%= x %></li>
+				<% end %>
+			</ul>
+		</p>
+	</div>
+<% end %>
+
+<%= form_for @post do |p| %>
+	<div class="form-group">
+		<%= p.label(:title) %>
+		<%= p.text_field :title, class: "form-control" %>
+	</div>
+
+	<div class="form-group">
+		<%= p.label(:content) %>
+		<%= p.text_area :content, class: "form-control" %>
+	</div>
+		
+	<div class="form-group">
+		<%= p.submit("Submit Post", class: "btn btn-block btn-primary") %>
+	</div>
+	
+<% end %>
+
+	</div>
+</div>
+

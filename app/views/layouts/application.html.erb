@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>RailsBlog</title>
+	<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+	<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+	<%= csrf_meta_tags %>
+</head>
+<body>
+
+	<div id="wrapper">
+
+		<!-- Sidebar -->
+		<div id="sidebar-wrapper">
+			<ul class="sidebar-nav">
+				<li class="sidebar-brand">
+					<a href="/">
+						<h1>Kalos</h1>
+					</a>
+				</li>
+				<!-- Greeting for logged in Users -->
+				<% if current_user %>
+					<hr>
+					<li class="sidebar-brand">
+						<span class="navname">Welcome <%= current_user.fname %></span>
+					</li>
+					<hr>
+				<% end %>
+				<li>
+					<a href="/">Feed</a>
+				</li>
+				<% if current_user %>
+				<li>
+					<%=link_to "New Post", new_post_path %>
+				</li>
+				<li>
+					<%= link_to "Profile", user_path(session[:user_id]) %>
+				</li>
+				<% end %>
+				<li>
+					<% if current_user %>
+					<a href="/logout">Sign Out</a>
+					<% else %>
+					<a href="/login">Sign In</a>
+					<a href="/users/new">Sign Up</a>
+					<% end %>
+				</li>		        
+			</ul>
+		</div>
+		<!-- /#sidebar-wrapper -->
+
+		<!-- Page Content -->
+		<div id="page-content-wrapper">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12 main">
+						<% flash.each do |name, msg| %>
+						<% if msg.is_a?(String) %>
+						<%= content_tag :div, msg, :class => "flash_#{name}" %>
+						<% end %>
+						<% end %>
+						<a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Show/Hide Menu</a>
+						<%= yield %>
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /#page-content-wrapper -->
+	</div>
+	<!-- /#wrapper -->
+
+<!-- jQuery -->
+<!-- <script src="js/jquery.js"></script> -->
+
+<!-- Bootstrap Core JavaScript -->
+<!-- <script src="js/bootstrap.min.js"></script> -->
+
+<!-- Menu Toggle Script -->
+<script>
+	$("#menu-toggle").click(function(e) {
+		e.preventDefault();
+		$("#wrapper").toggleClass("toggled");
+	});
+</script>
+
+</body>
+
+</html>

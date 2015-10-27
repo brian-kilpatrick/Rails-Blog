@@ -1,0 +1,31 @@
+<div class="row">
+	<div class="center-block form">
+		<h1><%=@post.title%></h1>
+		<i><%= @post.created_at.strftime("%A, %B %d, %Y") %></i>
+		<hr>
+		<p><%=@post.content%></p>
+		<hr>
+		<% if !@post.comments.empty? %>
+		<!-- should be loop -->
+		<b>Comments:</b><br>
+		<%= @post.comments.where(post_id: params[:id]).first.content %> <br>
+		<!-- not sure how to turn this into actual user name -->
+		<b>User:</b><br>
+		<%= @post.comments.where(post_id: params[:id]).first.user_id %>
+		<hr>
+		<% else %>
+			<p>No Comments Yet, Post One</p>
+		<% end %>
+		<%= form_tag({controller: "comments", action:"create"}, method:"post") do %>
+		<div class="form-group">
+		<%= text_area_tag(:content, nil, placeholder:"Enter a Comment Here", class: "form-control") %>
+		</div>
+		<%= hidden_field_tag :post_id, params[:id].to_i %>
+		<div class="form-group">
+		<%= submit_tag("Submit Comment", class: "btn btn-primary") %>
+			</div>
+		<% end %>
+	</div>
+</div>
+
+
